@@ -18,8 +18,7 @@ export const ceo: Employee = {
     { uniqueId: 10, name: "George Carrey", subordinates: [] },
     { uniqueId: 11, name: "Gary Styles", subordinates: [] },
     { uniqueId: 12, name: "Bruce Willis", subordinates: [] },
-    { uniqueId: 13, name: "Georgina Flangy", subordinates: [] }],
-
+    { uniqueId: 13, name: "Georgina Flangy", subordinates: [] }]
 };
 
 const employeeOrg: IEmployeeOrgApp = new EmployeeOrgApp(ceo);
