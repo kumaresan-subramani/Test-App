@@ -61,6 +61,18 @@
             </div>
         </div>
     </div>
+	<script id="treeTemplate" type="text/x-template">
+		<div>
+			<div class="treeviewdiv">
+				<div class="nodetext">
+					<span class="treeName">${name}</span>
+				</div>
+					<div class="nodebadge">
+						<span class="treeCount e-badge e-badge-primary">${uniqueId}</span>
+					</div>
+			</div>
+		</div>
+	</script>
     <style>
         .property-panel-content td {
             padding-top: 10px;
@@ -78,6 +90,14 @@
             border: 1px solid #dddddd;
             border-radius: 3px;
         }
+    .treeviewdiv {
+		display: flex;
+		justify-content: space-between;
+		padding-right: 30px;
+    }
+	.e-list-text {
+		width: 100%;
+	}
     </style>
 </body>
 

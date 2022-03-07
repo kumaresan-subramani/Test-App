@@ -5,9 +5,9 @@ export interface Employee {
   }
   
   export interface IEmployeeOrgApp {
-	ceo: Employee;
+	ceo: Employee | { [key: string]: Object };
 	move(employeeID: number, supervisorID: number): void;
-	undo(): void;
-	redo(): void;
+	undo?(): void;
+	redo?(): void;
   }
   
