@@ -15,12 +15,12 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
 	}
 
 	private updateEmployee(items: Employee[], employeeID: number, nestingKey: string, key: string, updateItem?: Employee): Employee[] {
-		items.reduce((value: Employee, item: any): any => {
+		items.reduce((value: Employee, item: Employee, index: number): Employee[] | any => {
 			if (item.uniqueId === employeeID) {
 				if (key == 'remove') {
 					this.removeItem = item;
-					items.splice(item, 1);
-					
+					items.splice(index, 1);
+
 				}
 				if (key == 'add' && updateItem) {
 					item.subordinates.push(updateItem)
@@ -31,14 +31,14 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
 		return items;
 	}
 	/**
-     * Moves the employee with employeeID (uniqueId) under a supervisor (another employee) that has supervisorID (uniqueId).
+	 * Moves the employee with employeeID (uniqueId) under a supervisor (another employee) that has supervisorID (uniqueId).
 	 * E.g. move Bob (employeeID) to be subordinate of Georgina (supervisorID).
-     *
-     * @function move
-     * @param {number} employeeID - specifies the employeeID (uniqueId)
+	 *
+	 * @function move
+	 * @param {number} employeeID - specifies the employeeID (uniqueId)
 	 * @param {number} supervisorID - specifies the supervisorID (uniqueId)
-     * @returns {void}
-     */
+	 * @returns {void}
+	 */
 	public move(employeeID: number, supervisorID: number): void {
 		this.ceo.subordinates = [...this.updateEmployee(this.ceo.subordinates, employeeID, 'subordinates', 'remove')];
 		this.ceo.subordinates = [...this.updateEmployee(this.ceo.subordinates, supervisorID, 'subordinates', 'add', this.removeItem)];
@@ -52,7 +52,7 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
 	 * @returns {void}
 	 */
 	private saveData(): void {
-		const changeData: Employee = {...this.ceo};
+		const changeData: string = JSON.stringify(this.ceo);
 		if (this.undoRedoStack.length >= this.steps) {
 			this.undoRedoStack = this.undoRedoStack.slice(0, this.steps + 1);
 		}
@@ -60,7 +60,7 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
 			(this.undoRedoStack[this.undoRedoStack.length - 1].toString().trim() === (changeData.toString() as string).trim())) {
 			return;
 		}
-		this.undoRedoStack.push(changeData);
+		this.undoRedoStack.push(JSON.parse(changeData));
 		this.steps = this.undoRedoStack.length - 1;
 		if (this.steps > this.undoRedoSteps) {
 			this.undoRedoStack.shift();

@@ -1,5 +1,5 @@
-import { EmployeeOrgApp } from "../../component/organization";
-import { Employee, IEmployeeOrgApp } from "../../component/interface";
+import { EmployeeOrgApp } from "./organization";
+import { Employee, IEmployeeOrgApp } from "./interface";
 import { FormValidator } from "@syncfusion/ej2-inputs";
 import { TreeView } from "@syncfusion/ej2-navigations";
 
@@ -23,23 +23,15 @@ export const ceo: Employee = {
 
 const employeeOrg: IEmployeeOrgApp = new EmployeeOrgApp(ceo);
 
-/* Example Reference
-employeeOrg.move(10, 9);
-console.log('move', employeeOrg.ceo);
-employeeOrg.undo();
-console.log('undo', employeeOrg.ceo);
-employeeOrg.redo();
-console.log('redo', employeeOrg.ceo);
-*/
-
 //Initialize TreeView component
 let treeViewInstance: TreeView = new TreeView({
   fields: {
-    dataSource: [ceo as any],
+    dataSource: [employeeOrg.ceo as { [key: string]: Object }],
     id: "uniqueId",
     text: "name",
     child: "subordinates",
   },
+  nodeTemplate: '#treeTemplate',
 });
 
 //Render initialized TreeView
@@ -52,17 +44,26 @@ document.getElementById("add").onclick = (): void => {
   var employee = parseInt((document.getElementById("Employee") as any).value);
   var supervisor = parseInt((document.getElementById("Supervisor") as any).value);
   employeeOrg.move(employee, supervisor);
-  treeViewInstance.refresh();
+  treeViewInstance.fields.dataSource = [employeeOrg.ceo as { [key: string]: Object }];
+  treeViewInstance.dataBind();
   treeViewInstance.expandAll();
   addFormObj.reset();
 };
 
 document.getElementById("undo").onclick = (): void => {
   employeeOrg.undo();
+  treeViewInstance.fields.dataSource = [employeeOrg.ceo as { [key: string]: Object }];
+  treeViewInstance.dataBind();
+  treeViewInstance.expandAll();
+  addFormObj.reset();
 };
 
 document.getElementById("Redo").onclick = (): void => {
   employeeOrg.redo();
+  treeViewInstance.fields.dataSource = [employeeOrg.ceo as { [key: string]: Object }];
+  treeViewInstance.dataBind();
+  treeViewInstance.expandAll();
+  addFormObj.reset();
 };
 
 document

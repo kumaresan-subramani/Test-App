@@ -6,7 +6,7 @@ System.config({
     },
     map: {
         app: 'app',
-        "organization": './app/organization.js',
+        "organization": './organization.js',
         //Syncfusion packages mapping
         "@syncfusion/ej2-base": "syncfusion:ej2-base/dist/ej2-base.umd.min.js",
         "@syncfusion/ej2-data": "syncfusion:ej2-data/dist/ej2-data.umd.min.js",
